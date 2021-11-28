@@ -19,8 +19,25 @@ myLinkedList.addAtTail(5)
  * @return {Object}
  */
 function reverseList(head) {
-  console.log(head)
+  if (!head) {
+    return null
+  }
+  let stack = []
+  let node = head
+  let newHead = null
+  while (node !== null) {
+    stack.unshift(node)
+    node = node.next
+  }
+  while (stack.length) {
+    const node = stack.shift()
+    const next = stack[0]
+    node.next = next || null
+    if (newHead === null) {
+      newHead = node
+    }
+  }
+  return newHead
 }
 
 reverseList(myLinkedList.head)
-// reverseList()

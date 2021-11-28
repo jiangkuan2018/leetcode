@@ -2,6 +2,7 @@ class LinkNode {
   constructor(val) {
     this.val = val
     this.next = null
+    this.random = null
   }
 }
 
@@ -61,18 +62,19 @@ class MyLinkedList {
   }
   /**
    * @param {number} val
-   * @return {void}
    */
   addAtTail(val) {
+    const linkNode = new LinkNode(val)
     if (this.head === null) {
-      this.head = new LinkNode(val)
-      return
+      this.head = linkNode
+      return linkNode
     }
     this.forEach((current) => {
       if (current.next === null) {
-        current.next = new LinkNode(val)
+        current.next = linkNode
       }
     })
+    return linkNode
   }
   /**
    * @param {number} index

@@ -8,16 +8,18 @@ myLinkedList.addAtTail(3);
  * 输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
  */
 
-function reversePrint(head) {
-  var newhead = null;
-  var p = null;
-  while (head) {
-    p = head.next;
-    head.next = newhead;
-    newhead = head;
-    head = p;
+ function reversePrint(headNode) {
+  const res = []
+  if (headNode) {
+    while (true) {
+      res.unshift(headNode.val)
+      if (headNode.next === null) {
+        break  
+      } else {
+        headNode = headNode.next
+      }
+    }
   }
-  return newhead;
+  return res
 }
-
-console.log(reversePrint(myLinkedList.head));
+console.log(reversePrint(myLinkedList.head))
