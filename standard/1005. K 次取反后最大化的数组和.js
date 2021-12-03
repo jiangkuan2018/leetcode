@@ -38,21 +38,24 @@ function NOT(n) {
  * @return {number}
  */
 var largestSumAfterKNegations = function(nums, k) {
-  let hasZero = false
-  const len = nums.length
-  const arr = new Array(len).fill(0).map((item, idx) => nums[idx]).sort((a, b) => a - b)
-  console.log(arr)
-  const res = arr.reduce((acc, curr, idx) => {
-    if (curr === 0) {
-      hasZero = true
+  let minusIdx = []
+  nums.sort((a, b) => Math.abs(a) - Math.abs(b)).forEach((item, idx) => {
+    if (item < 0) {
+      minusIdx.push(idx)
     }
-    if (k > idx && !hasZero) {
-      curr = NOT(curr)
+  })
+  while (k--) {
+    const idx = minusIdx.pop()
+    if (typeof idx === 'number') {
+      nums[idx] = Math.abs(nums[idx])
+    } else {
+      nums[0] = NOT(nums[0])
     }
+  }
+  return nums.reduce((acc, curr) => {
     acc += curr
     return acc
   }, 0)
-  return res
 }
 
 console.log(largestSumAfterKNegations(nums, k))
