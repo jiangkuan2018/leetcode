@@ -57,3 +57,11 @@ function insertionSort1(arr) {
 }
 
 insertionSort1([11, 2, 9, 33, 19, 5, -3, -10])
+
+
+/**
+ * 打车17
+ * 鸡柳28
+ * 超市376
+ * 百味鸡33
+ */
