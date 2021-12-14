@@ -1,5 +1,4 @@
-const { TreeNode } = require('../1.js')
-const { tree } = require('./tree')
+const { tree, TreeNode } = require('../tree.js')
 
 /**
  * 非递归迭代二叉树
