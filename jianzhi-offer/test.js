@@ -4,33 +4,28 @@ newTree.left = new TreeNode(9)
 newTree.right = new TreeNode(20)
 newTree.right.left = new TreeNode(15)
 newTree.right.right = new TreeNode(7)
+
+
 /**
  * 
- * 从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+  例如:
+  给定二叉树: [3,9,20,null,null,15,7],
 
- 
+      3
+    / \
+    9  20
+      /  \
+    15   7
+  返回其层次遍历结果：
 
-例如:
-给定二叉树: [3,9,20,null,null,15,7],
+  [
+    [3],
+    [20,9],
+    [15,7]
+  ]
+ */
 
-    3
-   / \
-  9  20
-    /  \
-   15   7
-返回其层次遍历结果：
-
-[
-  [3],
-  [9,20],
-  [15,7]
-]
- 
-
-提示：
-
-节点总数 <= 1000
- * 
+/**
  * Definition for a binary tree node.
  * function TreeNode(val) {
  *     this.val = val;
@@ -46,27 +41,32 @@ var levelOrder = function(root) {
     return []
   }
   const res = []
-  let queue = []
-  queue.push([root])
+  const queue = [[root]]
   while (queue.length) {
-    const layer = queue.shift()
-    const tem = []
-    layer.forEach(node => {
-      if (node.left) {
-        tem.push(node.left)
-      }
+    const nodes = queue.shift()
+    const tem1 = []
+    const tem2 = []
+    nodes.forEach((node) => {
+      tem1.push(node.val)
       if (node.right) {
-        tem.push(node.right)
+        tem2.push(node.right)
+      }
+      if (node.left) {
+        tem2.push(node.left)
       }
     })
-    res.push(layer.map(item => item.val))
-    if (tem.length) {
-      queue.push(tem)
+    if (tem1.length) {
+      res.push(tem1)
+    }
+    if (tem2.length) {
+      if (res.length % 2 === 0) {
+        tem2.reverse()
+      }
+      queue.push(tem2)
     }
   }
-  console.log(res)
   return res
 }
 
-// levelOrder(tree)
-levelOrder(newTree)
+// console.log(levelOrder(newTree))
+console.log(levelOrder(tree))
