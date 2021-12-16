@@ -1,11 +1,17 @@
-const { TreeNode } = require('./tree.js')
+class TreeNode {
+  constructor(val, left, right) {
+    this.val = (val===undefined ? 0 : val)
+    this.left = (left===undefined ? null : left)
+    this.right = (right===undefined ? null : right)
+  }
+}
 
 /**
  * 根据数组生成二叉树
  * @param {Array<number | null>} arr 
  * @returns {TreeNode}
  */
-function createTreeFromArray(arr) {
+ function createTreeFromArray(arr) {
   const root = new TreeNode(arr.shift())
   const queue = [root]
   while (queue.length && arr.length) {
@@ -21,8 +27,10 @@ function createTreeFromArray(arr) {
       queue.push(node.right)
     }
   }
-  console.log(JSON.stringify(root))
   return root
 }
 
-createTreeFromArray([3,9,20,null,null,15,7])
+module.exports = {
+  TreeNode,
+  createTreeFromArray
+}
