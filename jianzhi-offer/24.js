@@ -5,7 +5,7 @@
  * 输出: 5->4->3->2->1->NULL
  */
 
-const { MyLinkedList } = require('./linked')
+const { MyLinkedList } = require('../algorithm/linked/index.js')
 
 const myLinkedList = new MyLinkedList()
 myLinkedList.addAtTail(1)

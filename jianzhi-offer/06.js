@@ -1,4 +1,4 @@
-const { MyLinkedList } = require("./linked");
+const { MyLinkedList } = require("../algorithm/linked/index");
 const myLinkedList = new MyLinkedList();
 myLinkedList.addAtTail(1);
 myLinkedList.addAtTail(2);
