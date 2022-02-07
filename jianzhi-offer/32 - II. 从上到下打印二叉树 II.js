@@ -1,4 +1,4 @@
-const { tree, TreeNode } = require('../algorithm/binaryTree/tree.js')
+const { TreeNode } = require('../algorithm/binaryTree/index.js')
 const newTree = new TreeNode(3)
 newTree.left = new TreeNode(9)
 newTree.right = new TreeNode(20)

@@ -1,5 +1,5 @@
-const { tree, TreeNode } = require('../algorithm/binaryTree/tree.js')
-
+const { TreeNode, createTreeFromArray } = require('../algorithm/binaryTree/index.js')
+const tree = createTreeFromArray([1,2,3,4,5,6,7])
 /**
  * Definition for a binary tree node.
  * function TreeNode(val) {
