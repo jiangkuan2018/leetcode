@@ -6,11 +6,19 @@ function longestDiverseString(a, b, c) {
       break
     } else {
       const [max, second] = maxQueue()
+      console.log(`[ strMap ] =>`, strMap)
       const standByMax = strMap[max].substring(0, 2)
-      const standBySecond = strMap[second].substring(0, 2)
       strMap[max] = strMap[max].substring(2)
-      strMap[second] = strMap[second].substring(2)
-      if (!s.substring(s.length - 2).includes(standByMax)) {
+      let standBySecond = ''
+      if (strMap[second].length > 2 && strMap[second].length % 2 === 0) {
+        standBySecond = strMap[second].substring(0, 1)
+        strMap[second] = strMap[second].substring(1)
+      } else {
+        standBySecond = strMap[second].substring(0, 2)
+        strMap[second] = strMap[second].substring(2)
+      }
+      
+      if (!s.endsWith(standByMax)) {
         s += `${standByMax}${standBySecond}`
       }
     }
@@ -49,4 +57,7 @@ function generator(a, b, c) {
 // longestDiverseString(1, 1, 7)
 // longestDiverseString(2, 2, 1)
 // longestDiverseString(7, 1, 0)
-longestDiverseString(1, 0, 3)
+// longestDiverseString(1, 0, 3)
+// longestDiverseString(0, 8, 11)
+// longestDiverseString(2, 2, 1)
+longestDiverseString(4, 4, 3)
