@@ -39,7 +39,7 @@ class DoubleList{
     if (this.head.next == this.tail) {
       return null
     }
-    const first: LinkNode = this.head.next
+    const first = this.head.next
     this.remove(first)
     return first
   }
@@ -65,9 +65,20 @@ class LRUCache {
     this.map = {}
     this.catch = new DoubleList()
   }
+  /**
+   * @description 添加最近使用的元素
+   */
   private makeRecently(key: number): void {
     const x = this.map[key]
     this.catch.remove(x)
+    this.map[key] = x
+  }
+  /**
+   * @description 添加最近使用的元素
+   */
+  private addRecently(key: number, val: number) {
+    const x = new LinkNode(key, val)
+    this.catch.addLast(x)
     this.map[key] = x
   }
   private deleteKey(key: number) {
@@ -89,6 +100,15 @@ class LRUCache {
     return this.map[key].val
   }
   public put(key: number, val: number) {
+    if (key in this.map) {
+      this.deleteKey(key)
+      this.addRecently(key, val)
+      return
+    }
+    if (this.cap === this.catch.size) {
+      this.removeLeastRecently()
+    }
+    this
   }
 }
 
