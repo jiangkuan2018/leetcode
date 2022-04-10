@@ -3,8 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "packageManager": "pnpm@6.32.6",
   "dependencies": {
     "@types/node": "^16.11.10",
     "typescript": "^4.6.3"
-  }
+  },
+  "description": "",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiangkuan2018/leetcode.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/jiangkuan2018/leetcode/issues"
+  },
+  "homepage": "https://github.com/jiangkuan2018/leetcode#readme"
 }

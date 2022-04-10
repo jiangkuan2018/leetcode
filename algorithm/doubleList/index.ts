@@ -1,9 +1,9 @@
 class DBNode {
   key: number
-  val: string
+  val: number
   prev!: DBNode
   next!: DBNode
-  constructor(key: number, val: string) {
+  constructor(key: number, val: number) {
     this.key = key
     this.val = val
   }
@@ -14,17 +14,17 @@ class DoubleLinkedList {
   tail: DBNode
   size: number
   constructor() {
-    this.head = new DBNode(0, 'head') // 头部固定
-    this.tail = new DBNode(0, 'tail') // 尾部固定
+    this.head = new DBNode(0, 0) // 头部固定
+    this.tail = new DBNode(0, 0) // 尾部固定
     this.head.next = this.tail // 设置头节点指针指向
     this.tail.prev = this.head // 设置尾节点指针指向
     this.size = 0
   }
-  addAtTail(x: DBNode) {
+  addLast(x: DBNode) {
     /**
-     * [prev, 'head', next] <=> [prev, 'tail', next]
-     * [prev, 'head', next] <=> [prev, '1', next] <=> [prev, 'tail', next]
-     * [prev, 'head', next] <=> [prev, '1', next] <=> [prev, '2', next] <=> [prev, 'tail', next]
+     * [prev, 0, next] <=> [prev, 0, next]
+     * [prev, 0, next] <=> [prev, '1', next] <=> [prev, 0, next]
+     * [prev, 0, next] <=> [prev, '1', next] <=> [prev, '2', next] <=> [prev, 0, next]
      */
     x.next = this.tail // 设置新进节点的next指向
     x.prev = this.tail.prev // 设置新进节点的prev指向
@@ -56,10 +56,10 @@ class DoubleLinkedList {
 interface HashMapI {
   [key: number]: DBNode
 }
-class LRUCatch {
-  map: HashMapI
-  cache: DoubleLinkedList
-  cap: number
+class LRUCache {
+  private map: HashMapI
+  private cache: DoubleLinkedList
+  private cap: number
   constructor(capacity: number) {
     this.map = Object.create(null)
     this.cache = new DoubleLinkedList()
@@ -67,36 +67,54 @@ class LRUCatch {
   }
   public get(key: number) {
     if (key in this.map) {
-      return this.map[key]
+      this.makeRecently(key)
+      return this.map[key].val
     } else {
-      return null
+      return -1
     }
   }
-  public set(key: number, val: number) {
-    if (key in this.map) {
-      const target = this.map[key]
-      this.deleteKey(target)
+  public put(key: number, val: number) {
+    if (key in this.map) { // 如果使用已存在的key
+      this.deleteKey(key) // 先删除原有的引用
+      this.addRecently(key, val)
+      return
+    }
+    if (this.cap === this.cache.size) {
+      this.removeLeastRecently()
+    }
+    this.addRecently(key, val)
+  }
+  private removeLeastRecently() {
+    const node = this.cache.removeFirst()
+    if (node instanceof DBNode) {
+      delete this.map[node.key]
     }
   }
-  private deleteKey(x: DBNode) {
-    // delete this.map[]
-    // this.cache.remove()
+  private addRecently(key: number, val: number) {
+    const newNode = new DBNode(key, val)
+    this.cache.addLast(newNode)
+    this.map[key] = newNode
   }
-
+  private makeRecently(key: number) {
+    const node = this.map[key]
+    this.cache.remove(node)
+    this.cache.addLast(node)
+  }
+  private deleteKey(key: number) {
+    const node = this.map[key]
+    this.cache.remove(node)
+    delete this.map[key]
+  }
 }
-const LRU = new LRUCatch(5)
 
-// LRU.set()
+const LRU = new LRUCache(5)
 
-// const temp = new DoubleLinkedList()
-// temp.addAtTail(new DBNode('1'))
-// temp.addAtTail(new DBNode('2'))
-// const three = new DBNode('3')
-// temp.addAtTail(three)
-// temp.addAtTail(new DBNode('4'))
-// temp.remove(three)
-// temp.removeFirst()
+LRU.put(1, 1)
+LRU.put(2, 2)
+LRU.put(3, 3)
+console.log(LRU.get(2))
+LRU.put(4, 4)
+LRU.put(5, 5)
+LRU.put(6, 6)
 
-// temp.forEach((item) => {
-//   console.log(item.val)
-// })
+console.log(LRU)

@@ -56,7 +56,7 @@ interface CacheMapI {
   [key: number]: LinkNode
 }
 
-class LRUCache {
+class LRUCache1 {
   private map: CacheMapI
   private catch: DoubleList
   private cap: number
