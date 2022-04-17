@@ -1,122 +1,114 @@
-function toNumber(i: any) {
-  return Number(i)
-}
-class LinkNode {
-  public key: number
-  public val: number
-  public next!: LinkNode
-  public prev!: LinkNode
+class LRUDBNode {
+  key: number
+  val: number
+  prev!: LRUDBNode
+  next!: LRUDBNode
   constructor(key: number, val: number) {
     this.key = key
     this.val = val
   }
 }
 
-class DoubleList{
-  private head: LinkNode
-  private tail: LinkNode
-  public size: number
+class LRUDoubleLinkedList {
+  head: LRUDBNode
+  tail: LRUDBNode
+  size: number
   constructor() {
-    this.head = new LinkNode(0, 0)
-    this.tail = new LinkNode(0, 0)
+    this.head = new LRUDBNode(0, 0)
+    this.tail = new LRUDBNode(0, 0)
     this.head.next = this.tail
     this.tail.prev = this.head
     this.size = 0
   }
-  public addLast(x: LinkNode): void {
-    x.prev = this.tail.prev // 把最后一个节点的上一位赋值给x
-    x.next = this.tail // x.next = this.tail
-    this.tail.prev.next = x // 最后一位的上一位的下一位是x 修改最后第二位的下一位的指向
-    this.tail.prev = x // 最后一位的上一位修改为x
+  addLast(x: LRUDBNode) {
+    x.next = this.tail
+    x.prev = this.tail.prev
+    this.tail.prev = x
+    this.tail.prev.next = x
     this.size += 1
   }
-  public remove(x: LinkNode): void {
+  remove(x: LRUDBNode) {
     x.prev.next = x.next
     x.next.prev = x.prev
     this.size -= 1
   }
-  public removeFirst(): LinkNode | null {
-    if (this.head.next == this.tail) {
-      return null
-    }
-    const first = this.head.next
-    this.remove(first)
-    return first
+  removeFirst() {
+    const node = this.head.next
+    this.remove(node)
+    this.size -= 1
+    return node
   }
-  public forEach(iterator: (item: LinkNode) => void) {
-    let current = this.head
-    while (current !== this.tail) {
-      iterator(current)
-      current = current.next
-    }
+  removeLast() {
+    const node = this.tail.prev
+    this.remove(node)
+    this.size -= 1
+    return node
   }
 }
-
-interface CacheMapI {
-  [key: number]: LinkNode
+interface HashMapNewI {
+  [x: number]: LRUDBNode
 }
-
-class LRUCache1 {
-  private map: CacheMapI
-  private catch: DoubleList
+class LRUCacheNew {
+  private map: HashMapNewI
   private cap: number
-  constructor(capacity: number) {
-    this.cap = capacity
-    this.map = {}
-    this.catch = new DoubleList()
+  private cache: LRUDoubleLinkedList
+  constructor(cap: number) {
+    this.cap = cap
+    this.map = Object.create(null)
+    this.cache = new LRUDoubleLinkedList()
   }
-  /**
-   * @description 添加最近使用的元素
-   */
-  private makeRecently(key: number): void {
-    const x = this.map[key]
-    this.catch.remove(x)
-    this.map[key] = x
-  }
-  /**
-   * @description 添加最近使用的元素
-   */
-  private addRecently(key: number, val: number) {
-    const x = new LinkNode(key, val)
-    this.catch.addLast(x)
-    this.map[key] = x
-  }
-  private deleteKey(key: number) {
-    const x = this.map[key]
-    this.catch.remove(x)
-    delete this.map[key]
-  }
-  private removeLeastRecently() {
-    const x = this.catch.removeFirst()
-    if (x) {
-      delete this.map[x.key]
-    }
-  }
-  public get(key: number): number {
-    if (!(key in this.map)) {
+  public get(key: number) {
+    // console.log(this.map)
+    if (key in this.map) {
+      this.makeRecently(key)
+      const v = this.map[key].val
+      console.log(v)
+      return v
+    } else {
+      console.log(-1)
       return -1
     }
-    this.makeRecently(key)
-    return this.map[key].val
   }
   public put(key: number, val: number) {
-    if (key in this.map) {
+    if (key in this.map) { // 更新
       this.deleteKey(key)
       this.addRecently(key, val)
-      return
+    } else { // 添加操作 要考虑是否超过上限
+      if (this.cap === this.cache.size) {
+        this.deleteLast() // 删除最后使用的
+      }
+      this.addRecently(key, val)
     }
-    if (this.cap === this.catch.size) {
-      this.removeLeastRecently()
-    }
-    this
+  }
+  private deleteKey(key: number) {
+    const node = this.map[key]
+    this.cache.remove(node)
+    delete this.map[key]
+  }
+  private deleteLast() {
+    // const node = this.cache.removeFirst()
+    const node = this.cache.removeLast()
+    delete this.map[node.key]
+  }
+  private addRecently(key: number, val: number) {
+    const node = new LRUDBNode(key, val)
+    this.cache.addLast(node)
+    this.map[key] = node
+  }
+  private makeRecently(key: number) {
+    const node = this.map[key]
+    this.cache.remove(node)
+    this.cache.addLast(node)
   }
 }
 
-const dblist = new DoubleList()
-dblist.addLast(new LinkNode(1, 1))
-dblist.addLast(new LinkNode(2, 2))
-dblist.addLast(new LinkNode(3, 3))
-// console.log(dblist)
-dblist.forEach((item) => {
-  console.log(`[ item ] =>`, item)
-})
+const cache = new LRUCacheNew(2)
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // 返回  1
+cache.put(3, 3);    // 该操作会使得密钥 2 作废
+cache.get(2);       // 返回 -1 (未找到)
+cache.put(4, 4);    // 该操作会使得密钥 1 作废
+cache.get(1);       // 返回 -1 (未找到)
+cache.get(3);       // 返回  3
+cache.get(4);       // 返回  4

@@ -1,3 +1,7 @@
+/**
+ * 链表节点
+ * key和val表示节点实际存储的值，prev和next表示节点的前一位和后一位节点
+ */
 class DBNode {
   key: number
   val: number
@@ -8,7 +12,9 @@ class DBNode {
     this.val = val
   }
 }
-
+/**
+ * 双链表头和尾的节点是固定的，因此初始化时会默认设置为0值。
+ */
 class DoubleLinkedList {
   head: DBNode
   tail: DBNode
