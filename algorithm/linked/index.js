@@ -117,7 +117,36 @@ class MyLinkedList {
   }
 }
 
+/**
+ * 
+ * @param {Array} arr 
+ * @returns {MyLinkedList}
+ */
+function createLinkedFromArray(arr) {
+  const l = new MyLinkedList()
+  arr.forEach(v => {
+    l.addAtTail(v)
+  })
+  return l
+}
+/**
+ * 
+ * @param {LinkNode} node
+ * @returns {Array}
+ */
+function linkedListToArray(node) {
+  const res = []
+  let current = node
+  while (current) {
+    res.push(current.val)
+    current = current.next
+  }
+  return res
+}
+
 module.exports = {
   MyLinkedList,
-  LinkNode
+  LinkNode,
+  createLinkedFromArray,
+  linkedListToArray
 }
