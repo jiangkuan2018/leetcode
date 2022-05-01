@@ -18,14 +18,10 @@ class TreeNode {
     const node = queue.shift()
     const leftVal = arr.shift()
     const rightVal = arr.shift()
-    if (leftVal) {
-      node.left = new TreeNode(leftVal)
-      queue.push(node.left)
-    }
-    if (rightVal) {
-      node.right = new TreeNode(rightVal)
-      queue.push(node.right)
-    }
+    node.left = new TreeNode(leftVal)
+    queue.push(node.left)
+    node.right = new TreeNode(rightVal)
+    queue.push(node.right)
   }
   return root
 }

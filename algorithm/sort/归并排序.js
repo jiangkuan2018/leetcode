@@ -1,4 +1,5 @@
-const mergeSortArr = [11, 2, 9, 33, 19, 5, -3, -10, 10]
+const mergeSortArr = [11, 2, 9]
+// const mergeSortArr = [11, 2, 9, 33, 19, 5, -3, -10, 10]
 /**
  * 
  * @param {Array<number>} arr 
@@ -29,13 +30,7 @@ function merge(left, right) {
       result.push(right.shift())
     }
   }
-  if (left.length) {
-    result.push(left.shift())
-  }
-  if (right.length) {
-    result.push(right.shift())
-  }
-  return result
+  return result.concat(left, right)
 }
 
 console.log(mergeSort(mergeSortArr))
