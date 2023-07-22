@@ -1,20 +1,24 @@
-lockfileVersion: 5.3
+lockfileVersion: '6.0'
 
-specifiers:
-  '@types/node': ^16.11.10
-  typescript: ^4.6.3
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
-  '@types/node': 16.11.26
-  typescript: 4.6.3
+  '@types/node':
+    specifier: ^16.11.10
+    version: 16.11.26
+  typescript:
+    specifier: ^4.6.3
+    version: 4.6.3
 
 packages:
 
-  /@types/node/16.11.26:
+  /@types/node@16.11.26:
     resolution: {integrity: sha512-GZ7bu5A6+4DtG7q9GsoHXy3ALcgeIHP4NnL0Vv2wu0uUB/yQex26v0tf6/na1mm0+bS9Uw+0DFex7aaKr2qawQ==}
     dev: false
 
-  /typescript/4.6.3:
+  /typescript@4.6.3:
     resolution: {integrity: sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
