@@ -8,9 +8,11 @@ dependencies:
   '@types/node':
     specifier: ^16.11.10
     version: 16.11.26
+
+devDependencies:
   typescript:
-    specifier: ^4.6.3
-    version: 4.6.3
+    specifier: ^5.1.6
+    version: 5.1.6
 
 packages:
 
@@ -18,8 +20,8 @@ packages:
     resolution: {integrity: sha512-GZ7bu5A6+4DtG7q9GsoHXy3ALcgeIHP4NnL0Vv2wu0uUB/yQex26v0tf6/na1mm0+bS9Uw+0DFex7aaKr2qawQ==}
     dev: false
 
-  /typescript@4.6.3:
-    resolution: {integrity: sha512-yNIatDa5iaofVozS/uQJEl3JRWLKKGJKh6Yaiv0GLGSuhpFJe7P3SbHZ8/yjAHRQwKRoA6YZqlfjXWmVzoVSMw==}
-    engines: {node: '>=4.2.0'}
+  /typescript@5.1.6:
+    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
+    engines: {node: '>=14.17'}
     hasBin: true
-    dev: false
+    dev: true
