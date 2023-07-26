@@ -1,3 +1,5 @@
+const { log } = require("console")
+
 const bubbleSortArr = [11, 2, 9, 33, 19, 5, -3, -10]
 
 /**
@@ -6,18 +8,18 @@ const bubbleSortArr = [11, 2, 9, 33, 19, 5, -3, -10]
  * @returns {Array<number>}
  */
 function bubbleSort(arr) {
-  const len = arr.length
-  for (let i=0; i<len - 1; i++) {
-    for (let j=0; j<len - 1 - i; j++) {
-      console.log(i, j)
-      if (arr[j] > arr[j+1]) {
-        const tem = arr[j+1]
-        arr[j+1] = arr[j]
-        arr[j] = tem
+  const len = arr.length // 8
+  for (let i=0; i<len - 1; i++) { // i = len - 1 是因为
+    for (let j = 0; j < len - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        let temp = arr[j + 1]
+        arr[j+ 1] = arr[j]
+        arr[j] = temp
       }
     }
   }
   return arr
 }
 
-bubbleSort(bubbleSortArr)
+// bubbleSort(bubbleSortArr)
+bubbleSort([1,2,3,2,5,6])
