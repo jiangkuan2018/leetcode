@@ -19,8 +19,8 @@ export function createTreeFromArray(arr: TreeNodeVal[]): TreeNode {
   const queue = [root]
   while (queue.length && arr.length) {
     const node = queue.shift()
-    const leftVal = arr.shift()  as TreeNodeVal
-    const rightVal = arr.shift()  as TreeNodeVal
+    const leftVal = arr.shift() as TreeNodeVal
+    const rightVal = arr.shift() as TreeNodeVal
     if (node) {
       node.left = new TreeNode(leftVal)
       queue.push(node.left)
