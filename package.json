@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "packageManager": "pnpm@6.32.6",
-  "type": "module",
   "dependencies": {
     "@types/node": "^16.11.10"
   },
