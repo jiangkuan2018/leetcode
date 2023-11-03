@@ -5,7 +5,8 @@
   "license": "MIT",
   "packageManager": "pnpm@6.32.6",
   "dependencies": {
-    "@types/node": "^16.11.10"
+    "@types/node": "^16.11.10",
+    "lodash": "^4.17.21"
   },
   "description": "",
   "devDependencies": {
